@@ -1,18 +1,29 @@
  #!/bin/bash
-LEADERBOARD_ROOT="/home/vci-1/XT/leaderV2/leaderboard_resetting/"
-export LEADERBOARD_ROOT=$LEADERBOARD_ROOT   #"/home/vci-1/XT/leaderV2/leaderboard_resetting/leaderboard/1111"
-export Carla_root="/home/vci-1/XT/CARLA_0.9.14/"
+
+PORT=8000
+PROCESS=$(netstat -tulnp | grep ":$PORT" | awk '{print $7}' | cut -d'/' -f1)
+
+if [ ! -z "$PROCESS" ]; then
+    echo "Killing process $PROCESS using port $PORT"
+    kill -9 $PROCESS
+else
+    echo "Port $PORT is free"
+fi
+LEADERBOARD_ROOT="Your leaderboard path"
+export LEADERBOARD_ROOT=$LEADERBOARD_ROOT
+export Carla_root="Your Carla0.9.14 path"
 export TEAM_AGENT=$LEADERBOARD_ROOT/leaderboard/autoagents/human_agent.py
-export ROUTES=$LEADERBOARD_ROOT/data/routes_training.xml    #routes_training_ori.xml       #routes_training.xml
+export ROUTES=$LEADERBOARD_ROOT/data/routes_training.xml
 export ROUTES_SUBSET=0
 export REPETITIONS=1000
 export DEBUG_CHALLENGE=1
 export CHALLENGE_TRACK_CODENAME=SENSORS
 export TME_STAMP=$(date +"%Y_%m_%d_%H_%M_%s")
-export CHECKPOINT_ENDPOINT="${LEADERBOARD_ROOT}/result_log/results_$TME_STAMP.json"
+export CHECKPOINT_ENDPOINT="${LEADERBOARD_ROOT}/result_log/results_${TME_STAMP}.json"
 export RECORD_PATH=
 export RESUME=
 export SCENARIO_RUNNER_ROOT=$LEADERBOARD_ROOT/scenario_runner
+
 
 
 
